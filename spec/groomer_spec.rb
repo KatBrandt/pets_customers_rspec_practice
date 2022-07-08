@@ -61,4 +61,33 @@ describe Groomer do
       expect(@groomer.customers_with_balances).to eq [bob]
     end
   end
+
+  describe '#find_all_pets_type' do
+    it 'can find all pets of given type' do
+      bob = Customer.new("Bob", 1)
+      jan = Customer.new("Jan", 2)
+
+      samson = Pet.new({name: 'Samson', type: :dog, age: 3})
+      penny = Pet.new({name: 'Penny', type: :cat, age: 13})
+      aspen = Pet.new({name: 'Aspen', type: :dog, age: 7})
+      autumn = Pet.new({name: 'Autumn', type: :cat, age: 5})
+      luna = Pet.new({name: 'Luna', type: :cat, age: 8})
+
+      bob.adopt(samson)
+      bob.adopt(penny)
+
+      jan.adopt(aspen)
+      jan.adopt(autumn)
+      jan.adopt(luna)
+
+      @groomer.add_customer(bob)
+      @groomer.add_customer(jan)
+
+      cats = @groomer.find_all_pets_type(:cat)
+      dogs = @groomer.find_all_pets_type(:dog)
+
+      expect(cats).to eq 3
+      expect(dogs).to eq 2
+    end
+  end
 end

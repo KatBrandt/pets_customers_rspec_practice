@@ -11,9 +11,18 @@ class Groomer
   end
 
   def customers_with_balances
-    # return an array with all customers who have an outstanding balance
     customers.select do |customer|
       customer.outstanding_balance > 0
+    end
+  end
+
+  def find_all_pets_type(pet_type)
+    all_pets = customers.map do |customer|
+                customer.pets
+              end.flatten
+
+    all_pets.count do |pet|
+      pet.type == pet_type
     end
   end
 end
